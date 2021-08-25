@@ -1,17 +1,13 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-public class Selenium {
-
-	public static void main(String[] args) {
-		
-		System.setProperty("webdriver.chrome.driver", "D:\\DevOps Tools\\chromedriver_win32\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		System.out.println("Hello Google...");
-		driver.manage().window().maximize();
-		driver.get("http://google.com");
-		//driver.close();
-
+node {
+	stage ('SCM checkout'){
+		git "https://github.com/puneetbhatia77/selenium-Jenkinspipeline"
+		}
+	stage ('Build'){
+    	dir("comtest") {
+	   sh "mvn clean install"
+       }
 	}
-
+    stage ('test') {
+    	sh "java -jar comtest/target/com.test-1.0-SNAPSHOT.jar"
+    }
 }
